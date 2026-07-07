@@ -8,15 +8,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
 :root{
-  --bg:#FAF7F2;
-  --surface:#FFFFFF;
-  --text:#221F1B;
-  --text-muted:#786F62;
-  --line:#E2DACB;
-  --accent:#B8392B;
-  --accent-soft:#F3DED7;
-  --teal:#2C4A52;
-  --teal-soft:#DCE7E6;
+  --bg:#e0ffff;
+  --surface:#f4fffe;
+  --text:#0d2b2e;
+  --text-muted:#3a7275;
+  --line:#b0e8ea;
+  --accent:#007b8a;
+  --accent-soft:#c4f0f4;
+  --teal:#005f6b;
+  --teal-soft:#d0f2f5;
   --radius:10px;
 }
 *{box-sizing:border-box;}
@@ -31,8 +31,8 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:'Noto Sans 
 main{ max-width:680px; margin:0 auto; padding:20px 20px 60px; }
 
 .breadcrumb{ font-size:13px; color:var(--text-muted); margin-bottom:18px; }
-.breadcrumb button{ background:#EDE0CC; color:#8A5D22; border:none; padding:5px 12px; border-radius:999px; font:inherit; font-size:12px; cursor:pointer; text-decoration:none; }
-.breadcrumb button:hover{ background:#e3d2ad; }
+.breadcrumb button{ background:#b0e8ea; color:#005f6b; border:none; padding:5px 12px; border-radius:999px; font:inherit; font-size:12px; cursor:pointer; text-decoration:none; }
+.breadcrumb button:hover{ background:#8fd8dc; }
 .breadcrumb .sep{ margin:0 6px; color:var(--line); }
 .breadcrumb .current{ color:var(--text); }
 
@@ -52,9 +52,9 @@ main{ max-width:680px; margin:0 auto; padding:20px 20px 60px; }
 .badge.next{ background:var(--accent-soft); color:var(--accent); }
 
 .drama-row{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:15px 16px; margin-bottom:10px; display:flex; gap:14px; align-items:flex-start; }
-.drama-slot{ min-width:58px; width:58px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--gold-bg); border:1.5px solid var(--gold-border); border-radius:8px; padding:8px 4px; flex-shrink:0; gap:1px; }
-.drama-slot .slot-day{ font-size:14px; color:var(--gold-text); font-weight:700; line-height:1.4; }
-.drama-slot .slot-time{ font-size:12px; color:var(--gold-text); font-weight:600; line-height:1.4; }
+.drama-slot{ min-width:58px; width:58px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#c4f0f4; border:1.5px solid #5ac8d0; border-radius:8px; padding:8px 4px; flex-shrink:0; gap:1px; }
+.drama-slot .slot-day{ font-size:14px; color:#005f6b; font-weight:700; line-height:1.4; }
+.drama-slot .slot-time{ font-size:12px; color:#005f6b; font-weight:600; line-height:1.4; }
 .drama-body{ flex:1; min-width:0; }
 .drama-title{ font-weight:500; font-size:15px; margin-bottom:6px; }
 .producer-link{ background:none; border:none; padding:0; font:inherit; font-size:13px; color:var(--teal); cursor:pointer; text-decoration:underline; }
