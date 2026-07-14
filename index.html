@@ -22,12 +22,18 @@
 *{box-sizing:border-box;}
 body{ margin:0; background:var(--bg); color:var(--text); font-family:'Noto Sans JP', sans-serif; line-height:1.6; }
 
-/* スクロールバーを太く・常時表示（デスクトップのChrome/Edge対応。iOS Safari/Chromeはシステム制御のため非対応） */
-html, body{ scrollbar-width:auto; scrollbar-color:var(--accent) var(--accent-soft); }
-html::-webkit-scrollbar, body::-webkit-scrollbar{ width:50px; height:50px; }
-html::-webkit-scrollbar-track, body::-webkit-scrollbar-track{ background:var(--accent-soft); }
-html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb{ background:var(--accent); border-radius:10px; border:6px solid var(--accent-soft); min-height:40px; }
-html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover{ background:var(--teal); }
+#back-to-top{
+  position:fixed; right:18px; bottom:18px; z-index:1000;
+  display:flex; align-items:center; gap:6px;
+  background:var(--accent); color:#fff; border:none; border-radius:999px;
+  padding:11px 18px; font-family:inherit; font-size:13px; font-weight:600; cursor:pointer;
+  box-shadow:0 3px 12px rgba(0,60,65,0.28);
+  opacity:0; visibility:hidden; transform:translateY(10px);
+  transition:opacity .2s ease, transform .2s ease, visibility .2s;
+}
+#back-to-top.show{ opacity:1; visibility:visible; transform:translateY(0); }
+#back-to-top:hover{ background:var(--teal); }
+#back-to-top .arrow{ font-size:15px; line-height:1; }
 .serif{ font-family:'Shippori Mincho', serif; }
 
 .topbar{ position:relative; border-bottom:1px solid var(--line); padding:24px 20px 18px; }
@@ -745,6 +751,25 @@ function renderProfile(){
     ${worksHtml}
   `;
 }
+
+(function(){
+  var btn = document.createElement('button');
+  btn.id = 'back-to-top';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'ページの上部に戻る');
+  btn.innerHTML = '<span class="arrow">&#8593;</span><span>上部に戻る</span>';
+  document.body.appendChild(btn);
+  btn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  window.addEventListener('scroll', function(){
+    if (window.scrollY > 300) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  }, { passive: true });
+})();
 
 renderBreadcrumb();
 renderTop();
