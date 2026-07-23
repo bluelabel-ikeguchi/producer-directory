@@ -743,6 +743,38 @@ function renderProfile(){
         </div>
       `).join('');
 
+  function dramaYearRank(d){
+    const m = (d.period||'').match(/(\d{4})年/);
+    return m ? parseInt(m[1]) : 9999;
+  }
+  const WEEKDAY_ORDER = {'月':0,'火':1,'水':2,'木':3,'金':4,'土':5,'日':6};
+  function weekdayRank(d){
+    const ch = (d.weekday || '').charAt(0);
+    return WEEKDAY_ORDER.hasOwnProperty(ch) ? WEEKDAY_ORDER[ch] : 99;
+  }
+  const currentDramas = DATA.dramas.filter(d=>d.producers.includes(prod.name))
+    .sort((a,b)=> (dramaYearRank(a)-dramaYearRank(b)) || (weekdayRank(a)-weekdayRank(b)));
+  const currentHtml = currentDramas.length === 0
+    ? `<div class="empty-note">現在・今後の担当番組の記録はありません。</div>`
+    : currentDramas.map(d=>{
+        const links = d.producers.filter(name=>name!==prod.name).map(name=>{
+          const p2 = DATA.producers.find(x=>x.name===name);
+          const label = p2 ? `${p2.role}:${name}` : `${name}(プロフィール未登録)`;
+          return `<button class="producer-link" onclick="goProfile('${name}')">${label}</button>`;
+        }).join('<span style="color:var(--text-muted);margin:0 6px;">/</span>');
+        return `
+          <div class="drama-row" style="cursor:pointer;" onclick="goDramaList('${periodKeyOf(d)}')">
+            ${(d.weekday || d.time) ? `<div class="drama-slot"><span class="slot-day">${d.weekday || '−'}</span><span class="slot-time">${(d.time||'').replace(/(\d+時)(\d+分)/, '$1<br>$2')}</span></div>` : ''}
+            <div class="drama-body">
+              <div class="drama-title">${d.title}<span class="badge">${d.status}</span></div>
+              <div class="drama-memo">${d.station}　${d.period}</div>
+              ${links ? `<div>${links}</div>` : ''}
+              ${d.memo ? `<div class="drama-memo">${d.memo}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
   wrap.innerHTML = `
     <div class="profile-card">
       ${prod.photo ? `<img src="${prod.photo}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;">` : `<div class="avatar-lg" style="background:${colorFor(prod.name)}">${prod.name.charAt(0)}</div>`}
@@ -754,6 +786,8 @@ function renderProfile(){
         ${prod.memo ? `<p class="profile-meta">備考:${prod.memo}</p>` : ''}
       </div>
     </div>
+    <div class="section-title">現在・今後の担当番組</div>
+    ${currentHtml}
     <div class="section-title">過去作品(弊社俳優との接点)</div>
     ${worksHtml}
   `;
